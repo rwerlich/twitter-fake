@@ -32,9 +32,9 @@ class LikeController extends Controller {
 			$notification = $this->get('app.notification_service');
 			$notification->set($publication->getUser(), 'like', $user->getId(), $publication->getId());
 			
-			$status = 'Te gusta esta publicación !!';
+			$status = 'Você curtiu a publicação!';
 		} else {
-			$status = 'No se ha podido guardar el me gusta !!';
+			$status = 'Não foi possível curtir a publicação!';
 		}
 
 		return new Response($status);
@@ -54,9 +54,9 @@ class LikeController extends Controller {
 		$flush = $em->flush();
 
 		if ($flush == null) {
-			$status = 'Ya no te gusta esta publicación !!';
+			$status = 'Você não curtiu a publicação!';
 		} else {
-			$status = 'No se ha podido desmarcar el me gusta !!';
+			$status = 'Não foi possível descuritr a publicação!';
 		}
 
 		return new Response($status);

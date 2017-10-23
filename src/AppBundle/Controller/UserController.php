@@ -37,51 +37,42 @@ class UserController extends Controller {
 	public function registerAction(Request $request) {
 		if (is_object($this->getUser())) {
 			return $this->redirect('home');
-		}
-
+		}                
 		$user = new User();
 		$form = $this->createForm(RegisterType::class, $user);
-
-		$form->handleRequest($request);
-		if ($form->isSubmitted()) {
-			if ($form->isValid()) {
-
-				$em = $this->getDoctrine()->getManager();
-				//$user_repo = $em->getRepository("BackendBundle:User");
-
-				$query = $em->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email OR u.nick = :nick')
-						->setParameter('email', $form->get("email")->getData())
-						->setParameter('nick', $form->get("nick")->getData());
-
-				$user_isset = $query->getResult();
-
-				if (count($user_isset) == 0) {
-
-					$factory = $this->get("security.encoder_factory");
-					$encoder = $factory->getEncoder($user);
-
-					$password = $encoder->encodePassword($form->get("password")->getData(), $user->getSalt());
-
-					$user->setPassword($password);
-					$user->setRole("ROLE_USER");
-					$user->setImage(null);
-
-					$em->persist($user);
-					$flush = $em->flush();
+                $form->handleRequest($request);
+                if ($form->isSubmitted()) {
+                    if ($form->isValid()) {
+                        echo "Ola Victor<br>";
+                        $em = $this->getDoctrine()->getManager();
+			$query = $em->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email OR u.nick = :nick')
+				->setParameter('email', $form->get("email")->getData())
+				->setParameter('nick', $form->get("nick")->getData());
+			$user_isset = $query->getResult();
+                        echo "By Victor";
+			if (count($user_isset) == 0) {                            
+                            $factory = $this->get("security.encoder_factory");
+                            $encoder = $factory->getEncoder($user);
+                            $password = $encoder->encodePassword($form->get("password")->getData(), $user->getSalt());
+                            $user->setPassword($password);
+                            $user->setRole("ROLE_USER");
+                            $user->setImage(null);
+                            $em->persist($user);
+                            $flush = $em->flush();
 
 					if ($flush == null) {
-						$status = "Te has registrado correctamente";
+						$status = "Registro realizado";
 
 						$this->session->getFlashBag()->add("status", $status);
 						return $this->redirect("login");
 					} else {
-						$status = "No te has registrado correctamente";
+						$status = "Erro ao fazer o registro";
 					}
 				} else {
-					$status = "El usuario ya existe !!";
+					$status = "Usuário já está em uso!!!";
 				}
 			} else {
-				$status = "No te has registrado correctamente !!";
+				$status = "Erro ao fazer o registro";
 			}
 
 			$this->session->getFlashBag()->add("status", $status);
@@ -148,15 +139,15 @@ class UserController extends Controller {
 					$flush = $em->flush();
 
 					if ($flush == null) {
-						$status = "Has modificado tus datos correctamente";
+						$status = "Dados atualizados!";
 					} else {
-						$status = "No has modificado tus correctamente";
+						$status = "Você não editou seus dados corretamente!";
 					}
 				} else {
-					$status = "El usuario ya existe !!";
+					$status = "O usuário já existe!";
 				}
 			} else {
-				$status = "No se han actualizado tus datos correctamente !!";
+				$status = "Não foi possível atualizar seus dados!";
 			}
 
 			$this->session->getFlashBag()->add("status", $status);

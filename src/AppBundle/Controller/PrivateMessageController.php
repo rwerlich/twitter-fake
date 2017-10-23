@@ -79,13 +79,13 @@ class PrivateMessageController extends Controller {
 				$flush = $em->flush();
 				
 				if($flush == null){
-					$status = "El mensaje privado se ha enviado correctamente !!";
+					$status = "Mensagem enviada com sucesso!";
 				}else{
-					$status = "El mensaje privado no se ha enviado";
+					$status = "Não foi possível enviar a mensagem!";
 				}
 				
 			}else{
-				$status = "El mensaje privado no se ha enviado";
+				$status = "Não foi possível enviar a mensagem!";
 			}
 			
 			$this->session->getFlashBag()->add("status", $status);

@@ -38,9 +38,9 @@ class FollowingController extends Controller {
 			$notification = $this->get('app.notification_service');
 			$notification->set($followed, 'follow', $user->getId());
 			
-			$status = "Ahora estás siguiendo a este usuario !!";
+			$status = "Agora você está seguindo o usuário!";
 		} else {
-			$status = "No se ha podido seguir a este usuario !!";
+			$status = "Erro ao seguir o usuário!";
 		}
 
 		return new Response($status);
@@ -62,9 +62,9 @@ class FollowingController extends Controller {
 		$flush = $em->flush();
 
 		if ($flush == null) {
-			$status = "Has dejado de seguir a este usuario !!";
+			$status = "Você deixou de seguir o usuário!";
 		} else {
-			$status = "No se ha podido dejar de seguir a este usuario !!";
+			$status = "Erro ao deixar de seguir o usuário";
 		}
 
 		return new Response($status);

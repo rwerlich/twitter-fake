@@ -74,13 +74,13 @@ class PublicationController extends Controller{
 				$flush = $em->flush();
 				
 				if($flush == null){
-					$status = 'La publicación se ha creado correctamente !!';
+					$status = 'Publicado!!!';
 				}else{
-					$status = 'Error al añadir la publicación !!';
+					$status = 'Ocorreu um erro ao fazer a publicação!';
 				}
 				
 			}else{
-				$status = 'La publicación no se ha creado, porque el formulario no es válido !!';
+				$status = 'Erro, você não preencheu corretamente o formulário!';
 			}
 			
 			$this->session->getFlashBag()->add("status", $status);
@@ -142,12 +142,12 @@ class PublicationController extends Controller{
 			$flush = $em->flush();
 
 			if($flush == null){
-				$status = 'La publicación se ha borrado correctamente';
+				$status = 'Publicação excluida!';
 			}else{
-				$status = 'La publicación no se ha borrado';
+				$status = 'Não foi possível excluir a publicação!';
 			}
 		}else{
-			$status = 'La publicación no se ha borrado';
+			$status = 'Não foi possível excluir a publicação!';
 		}
 		
 		return new Response($status);
